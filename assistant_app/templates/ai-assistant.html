@@ -136,16 +136,18 @@
             <!-- Model Selection -->
             <div class="mb-4">
                 <label for="model" class="block text-gray-700 font-medium mb-2">Select large language model</label>
-                <label for="model" class="block text-gray-400 font-small mb-2">All models run locally on our AWS
-                    servers using the Ollama engine, ensuring enhanced privacy without relying on cloud
-                    services.</label>
+                <label for="model" class="block text-gray-400 font-small mb-2">Note: The models may perform slow for demo purpose as it is running on low cost VPS based on CPU only.
+                    A higher performance model can be used for production using GPU.
+                </label>
                 <select id="model" name="model"
                     class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
                     required>
                     <option value="">Select LLM Model</option>
-                    <option value="gemma2:2b">Gemma 2 2B (Google deep mind LLM)</option>
-                    <option value="qwen2.5:1.5b">Qwen 2.5 1.5B (Alibaba LLM)</option>
                     <option value="llama3.2:1b">Llama 3.2 1B (Open source LLM by Meta)</option>
+                    <option value="gemma2:2b" disabled>Gemma 2 2B (Google deep mind LLM)</option>
+                    <option value="qwen2.5:1.5b" disabled>Qwen 2.5 1.5B (Alibaba LLM)</option>
+                    <option value="tinylama" disabled>Tiny Llama 1B (Based on Llama 1.B)</option>
+                    <option value="mistral" disabled>Mistral 1B(Developed by Mistral Ai)</option>
                 </select>
             </div>
 
