@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  django_dev:
+    build: .
+    restart: unless-stopped
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - TZ=Asia/Kathmandu
+    ports:
+      - "8004:8000"
+    volumes:
+      - ./assistant_app:/app
+
+  ollama:
+    image: ollama/ollama:0.5.4
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=Asia/Kathmandu
+    # entrypoint: ["ollama", "run", "llama3.2"]
+    # ports:
+    #   - "11434:11434"  # Expose port 11434
+    volumes:
+      - ./ollama-data:/root/.ollama # Mount the ollama volume to the container
+
+volumes:
+  ollama: # Define the ollama volume

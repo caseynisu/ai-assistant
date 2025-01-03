@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personalize your AI Assistant">
+    <title>Client Demo - Personalize Your AI Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.css" rel="stylesheet" />
+    <style>
+        /* Custom styles for the hero section */
+        .hero-section {
+            background-image: url('https://as1.ftcdn.net/v2/jpg/03/81/65/06/1000_F_381650616_Of9WwujWJBuYQi9EYRNy2tlDCsVlgkXu.jpg');
+            /* Add your background image URL */
+            background-size: cover;
+            background-position: center;
+            height: 20vh;
+            /* Increased height */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .h1.title {
+            margin-top: -7rem;
+            font-size: 1.5rem;
+            /* font-weight: bold; */
+        }
+
+        .title-section {
+            font-size: 1.2rem;
+            /* font-weight: bold; */
+            margin-top: 20px;
+        }
+
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .star-btn {
+            color: #ccc;
+        }
+
+        .star-btn.active {
+            color: #f39c12;
+        }
+
+        #feedback-section.disabled {
+            background-color: #f0f0f0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">AI-Solution Sunderland</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Our Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schedule-demo">Schedule a Demo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section"></section>
+
+    <section id="title" class="title-section">
+        <!-- <h1 class="text-center mb-4">Innovating the Future of Work through AI-powered solutions for your business</h1> -->
+        <h1 class="text-center mb-4">Hello {{instance.name}}, let's enhance your AI Assistant with personalized settings
+            for your business.</h1>
+    </section>
+
+
+    <!-- Personalization Form -->
+    <div class="max-w-4xl mx-auto py-10">
+        <!-- <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Personalize Your AI Assistant</h2> -->
+
+
+        <form id="personalize-form" class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Personalize Your AI Assistant</h3>
+            <!-- <p class="text-gray-600 mb-6">Customize the personality of your AI assistant for a tailored experience. -->
+            </p>
+            <!-- Assistant Name -->
+            <div class="mb-4">
+                <label for="assistant-name" class="block text-gray-700 font-medium mb-2">AI Assistant Name</label>
+                <input type="text" id="assistant-name" name="assistant_name"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+                    placeholder="Enter assistant's name" required>
+            </div>
+
+            <!-- Company Name -->
+            <div class="mb-4">
+                <label for="company-name" class="block text-gray-700 font-medium mb-2">Company Name</label>
+                <input type="text" id="company-name" name="company_name"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+                    placeholder="Enter company name" required>
+            </div>
+
+            <!-- Services Offered -->
+            <div class="mb-4">
+                <label for="services" class="block text-gray-700 font-medium mb-2">Services Offered</label>
+                <input type="text" id="services-input"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+                    placeholder="Add a service and press Space or Enter">
+                <div id="services-tags" class="mt-2 flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- Personality Input -->
+            <div class="mb-4">
+                <label for="personality" class="block text-gray-700 font-medium mb-2">AI Assistant Personality</label>
+                <textarea id="personality" name="personality"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+                    rows="4" readonly></textarea>
+            </div>
+
+            <!-- Model Selection -->
+            <div class="mb-4">
+                <label for="model" class="block text-gray-700 font-medium mb-2">Select large language model</label>
+                <label for="model" class="block text-gray-400 font-small mb-2">All models run locally on our AWS
+                    servers using the Ollama engine, ensuring enhanced privacy without relying on cloud
+                    services.</label>
+                <select id="model" name="model"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+                    required>
+                    <option value="">Select LLM Model</option>
+                    <option value="gemma2:2b">Gemma 2 2B (Google deep mind LLM)</option>
+                    <option value="qwen2.5:1.5b">Qwen 2.5 1.5B (Alibaba LLM)</option>
+                    <option value="llama3.2:1b">Llama 3.2 1B (Open source LLM by Meta)</option>
+                </select>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition">Submit
+                and Start Conversation</button>
+        </form>
+
+        <!-- Chat Interface -->
+        <div id="chat-section" class="bg-white shadow-lg rounded-lg p-6">
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Chat with Your AI Assistant</h3>
+
+            <div class="chat-container border border-gray-300 rounded-lg p-4 bg-gray-50">
+                <div id="chat-container" class="space-y-4"></div>
+            </div>
+
+            <form id="chat-form" class="mt-4">
+                <div class="flex gap-2">
+                    <input type="text" id="userMessage"
+                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-500"
+                        placeholder="Type your message here..." required>
+                    <button type="submit"
+                        class="bg-blue-500 text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-600 transition">Send</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Feedback Section -->
+        <div id="feedback-section" class="bg-white mt-2 shadow-lg rounded-lg p-6">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4 text-center">Let us know how we did! Rate your
+                experience with our AI Assistant.</h4>
+            <div id="feedback-stars" class="flex justify-center gap-2">
+                <button type="button" class="star-btn text-2xl" data-value="1">&#9733;</button>
+                <button type="button" class="star-btn text-2xl" data-value="2">&#9733;</button>
+                <button type="button" class="star-btn text-2xl" data-value="3">&#9733;</button>
+                <button type="button" class="star-btn text-2xl" data-value="4">&#9733;</button>
+                <button type="button" class="star-btn text-2xl" data-value="5">&#9733;</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 AI-Solution Sunderland. All Rights Reserved. | Developed by Nisu</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
+    <script>
+        const assistantNameInput = document.getElementById('assistant-name');
+        const companyNameInput = document.getElementById('company-name');
+        const servicesInput = document.getElementById('services-input');
+        const servicesTags = document.getElementById('services-tags');
+        const personalityTextarea = document.getElementById('personality');
+        let services = [];
+
+        const personalizeForm = document.getElementById('personalize-form');
+        const chatSection = document.getElementById('chat-section');
+        const chatContainer = document.getElementById('chat-container');
+        const chatForm = document.getElementById('chat-form');
+        const userMessageInput = document.getElementById('userMessage');
+        const modelSelect = document.getElementById('model');
+
+        // Handle Personalization Form Submission
+        personalizeForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const assistantName = document.getElementById('assistant-name').value;
+            const body = {
+                model: modelSelect.value,
+                messages: [
+                    { role: 'system', content: personalityTextarea.value },
+                    { role: 'user', content: 'Hello' }
+
+                ],
+                stream: false,
+            };
+            console.log(body);
+            // Send request to LLM API
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.message) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Assistant Created!',
+                            text: `You can now chat with your personalized AI Assitant ${assistantName}.`
+                        });
+                        addMessage('user', "Hello");
+                        addMessage('ai', data.message.content);
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Unable to create your assistant. Please try again.'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Network Error',
+                        text: 'Unable to connect to the server. Please try again later.'
+                    });
+                });
+        });
+
+        // Handle Chat Form Submission
+        chatForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const userMessage = userMessageInput.value;
+            addMessage('user', userMessage);
+            userMessageInput.value = '';
+            const body = {
+                model: modelSelect.value,
+                messages: [
+                    { role: 'system', content: personalityTextarea.value },
+                    { role: 'user', content: userMessage }
+
+                ],
+                stream: false,
+            };
+            // Send user message to LLM API
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        addMessage('ai', data.message.content);
+                    } else {
+                        addMessage('ai', 'Sorry, something went wrong. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    addMessage('ai', 'Sorry, there was a network error. Please try again later.');
+                });
+        });
+
+        // Add Message to Chat Container
+        function addMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender === 'user' ? 'text-right' : ''}`;
+            messageDiv.innerHTML = `<span class="inline-block px-4 py-2 rounded-lg ${sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}">${message}</span>`;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight; // Scroll to the bottom
+        }
+
+        // Update personality dynamically
+        function updatePersonality() {
+            const assistantName = assistantNameInput.value || '[Assistant\'s Name]';
+            const companyName = companyNameInput.value || '[Company Name]';
+            const servicesText = services.length > 0 ? services.join(', ') : '[services/products offered]';
+
+            personalityTextarea.value = `You are ${assistantName}, a highly professional and friendly customer service assistant working for ${companyName}, a company specializing in ${servicesText}. Your primary role is to assist customers by answering their questions, solving problems, and providing helpful information about our services.`;
+        }
+
+        // Initialize personality on page load
+        updatePersonality();
+
+        // Event listeners to update personality
+        assistantNameInput.addEventListener('input', updatePersonality);
+        companyNameInput.addEventListener('input', updatePersonality);
+
+        // Handle adding services
+        servicesInput.addEventListener('keypress', function (event) {
+            if (event.key === ' ' || event.key === 'Enter') {
+                event.preventDefault();
+                const service = servicesInput.value.trim();
+                if (service && !services.includes(service)) {
+                    services.push(service);
+
+                    const tag = document.createElement('span');
+                    tag.textContent = service;
+                    tag.className = 'bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm cursor-pointer';
+                    tag.addEventListener('click', () => {
+                        services = services.filter(s => s !== service);
+                        tag.remove();
+                        updatePersonality();
+                    });
+
+                    servicesTags.appendChild(tag);
+                    servicesInput.value = '';
+                    updatePersonality();
+                }
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Select the star buttons and feedback section
+            const stars = document.querySelectorAll("#feedback-stars .star-btn");
+            const feedbackSection = document.getElementById("feedback-section");
+
+            // Add event listener for each star button
+            stars.forEach(star => {
+                star.addEventListener("click", function () {
+                    // Get the selected star rating
+                    const starValue = parseInt(this.getAttribute("data-value"));
+                    const requestId = "{{instance.id}}";
+                    // Send a POST request to the feedback API
+                    fetch("/api/client-feedback/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ request: requestId, stars: starValue }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.stars) {
+                                // Disable feedback section after submitting
+                                feedbackSection.classList.add("disabled");
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Feedback sumbitted!',
+                                    text: 'Thank you for your valuable feedback!',
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Unable to submit feedback. Please try again.'
+                                })
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Unable to submit feedback. Please try again.'
+                            })
+                        });
+
+                    // Mark all stars up to the clicked one as active
+                    stars.forEach(star => star.classList.remove("active"));
+                    for (let i = 0; i < starValue; i++) {
+                        stars[i].classList.add("active");
+                    }
+                });
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>
