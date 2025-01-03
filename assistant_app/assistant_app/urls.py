@@ -17,9 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from core.models import Serivces
+
+class IndexView(TemplateView):
+    template_name = 'landing-page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Ai Solution'
+        context['services'] = Serivces.objects.all()
+        return context
+
 
 urlpatterns = [
-   path('', TemplateView.as_view(template_name='landing-page.html'), name='index'),
+   path('', IndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
     path('api/', include('core.urls')),
 ]

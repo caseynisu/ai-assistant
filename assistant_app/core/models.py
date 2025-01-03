@@ -29,3 +29,31 @@ class ClientFeedback(models.Model):
     class Meta:
         verbose_name = "Client Feedback"
         verbose_name_plural = "Client Feedback"
+
+
+
+class Serivces(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __str__(self):
+        return f"{self.title}"
+
+    class Meta:
+        verbose_name = "Service"
+        verbose_name_plural = "Services"
+
+
+class Events(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    date = models.DateField()
+    venue = models.CharField(max_length=100)
+    notify_users = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.title} - {self.date}"
+
+    class Meta:
+        verbose_name = "Event"
+        verbose_name_plural = "Events"

@@ -81,30 +81,16 @@
       <section id="services" class="container py-5">
         <h2 class="text-center mb-4 our-services">Our Services</h2>
         <div class="row">
+          {% for service in services%}
           <div class="col-md-4">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">AI-powered Virtual Assistant</h5>
-                <p class="card-text">Revolutionize your digital employee experience with our AI-powered virtual assistant, built to support and accelerate your workflow.</p>
+                <h5 class="card-title">{{service.title}}</h5>
+                <p class="card-text">{{service.description}}</p>
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">AI-based Prototyping</h5>
-                <p class="card-text">Speed up design and engineering processes with affordable AI-based prototyping solutions tailored to your needs.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Customer Solutions</h5>
-                <p class="card-text">Providing personalized AI-driven solutions to meet the unique needs of various industries for faster, smarter outcomes.</p>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </section>
 
