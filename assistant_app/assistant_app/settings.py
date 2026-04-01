@@ -136,7 +136,7 @@ CORS_ALLOWED_ORIGINS = [
 
 
 # Email Backend
-EMAIL_HOST = "email-smtp.ap-northeast-1.amazonaws.com"
-EMAIL_HOST_USER = "AKIA3PCPOPU7HFHMPPGC"
-EMAIL_HOST_PASSWORD = "BMsftnhtwHpVmDfwp1SiOOsHepwktyqS2ApPMFfCY0r7"
-DEFAULT_FROM_EMAIL = "no-reply@notification.tksunified.com"
+EMAIL_HOST = ""
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+DEFAULT_FROM_EMAIL = ""
